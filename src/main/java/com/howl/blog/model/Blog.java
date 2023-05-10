@@ -11,14 +11,17 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.GeneratedValue;
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name="BLOGS")
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Blog {
 
   @Id
