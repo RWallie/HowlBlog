@@ -28,21 +28,23 @@ public class Blog {
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
 
-  @Column
+  @Column(name = "title", nullable = false)
   private String title;
 
-  @Column
+  @Column(name = "author", nullable = false)
   private String author;
 
-  @Column
+  @Column(name = "category", nullable = false)
   private String category;
   
-  @Column(length = 2000)
+  @Column(name = "text", length = 2000, nullable = false)
   private String text;
 
+  @Column(name = "publish_date", nullable = false)
   @Temporal(TemporalType.DATE)
   private Date publishDate;
-
+  
+  @Column(name = "publish_time", nullable = false)
   @Temporal(TemporalType.TIME)
   private Time publishTime;
 }
