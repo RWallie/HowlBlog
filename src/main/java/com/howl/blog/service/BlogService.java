@@ -19,8 +19,6 @@ public class BlogService {
     this.blogRepository = blogRepository;
   }
 
-
-
   public ResponseEntity<List<Blog>> getAllBlogs() {
     try {
       List<Blog> blogList = new ArrayList<>();
