@@ -1,7 +1,7 @@
 package com.howl.blog.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,40 +12,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.howl.blog.model.Blog;
+import com.howl.blog.dto.BlogDto;
 import com.howl.blog.service.BlogService;
 
 
 @RestController
 @RequestMapping("/blogs")
 public class BlogController {
-  @Autowired
+
   private BlogService blogService;
 
+  public BlogController(BlogService blogService){
+    this.blogService = blogService;
+  }
+
   @GetMapping
-  public ResponseEntity<List<Blog>> getAllBlogs() {
-    return this.blogService.getAllBlogs();
+  public ResponseEntity<List<BlogDto>> getAllBlogs() {
+    return new ResponseEntity<List<BlogDto>>(blogService.getAllBlogs(), HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Blog> getBlogById(@PathVariable Long id) {
-    return this.blogService.getBlogById(id);
+  public ResponseEntity<BlogDto> getBlogById(@PathVariable Long id) {
+    return ResponseEntity.ok(blogService.getBlogById(id));
   }
 
   @PostMapping
-  public ResponseEntity<Blog> addBlogPost(@RequestBody Blog blog) {
-    return this.blogService.addBlog(blog);
+  public ResponseEntity<BlogDto> addBlogPost(@RequestBody BlogDto blogDto) {
+    return new ResponseEntity<BlogDto>(blogService.addBlog(blogDto), HttpStatus.CREATED);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Blog> updateBlogPostById(@PathVariable Long id, @RequestBody Blog newBlogData) {
-    return this.blogService.updateBlogPostById(id, newBlogData);
+  public ResponseEntity<BlogDto> updateBlogPostById(@PathVariable Long id, @RequestBody BlogDto blogDto) {
+    BlogDto response = blogService.updateBlogById(id, blogDto);
+
+    return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Blog> deleteBlogPostById(@PathVariable Long id) {
-    return this.blogService.deleteBlogPostById(id);
+  public ResponseEntity<String> deleteBlogPostById(@PathVariable Long id) {
+    blogService.deleteBlogById(id);
+
+    return new ResponseEntity<>("Blog Deleted", HttpStatus.OK);
   }
 
 }
