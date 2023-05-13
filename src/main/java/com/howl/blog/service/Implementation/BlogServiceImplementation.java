@@ -53,20 +53,8 @@ public class BlogServiceImplementation implements BlogService {
         if (blogDto.getTitle() != null){
             blog.setTitle(blogDto.getTitle());
         }
-        if (blogDto.getAuthor() != null) {
-            blog.setAuthor(blogDto.getAuthor());
-        }
-        if (blogDto.getCategory() != null) {
-            blog.setAuthor(blogDto.getAuthor());
-        }
-        if (blogDto.getText() != null) {
-            blog.setText(blogDto.getText());
-        }
-        if (blogDto.getPublishDate() != null) {
-            blog.setPublishDate(blogDto.getPublishDate());
-        }
-        if (blogDto.getPublishTime() != null) {
-            blog.setPublishTime(blogDto.getPublishTime());
+        if (blogDto.getMessage() != null) {
+            blog.setMessage(blogDto.getMessage());
         }
 
         Blog updatedBlog = blogRepository.save(blog);
@@ -85,11 +73,7 @@ public class BlogServiceImplementation implements BlogService {
         BlogDto blogDto = BlogDto.builder()
             .id(blog.getId())
             .title(blog.getTitle())
-            .author(blog.getAuthor())
-            .category(blog.getCategory())
-            .text(blog.getText())
-            .publishDate(blog.getPublishDate())
-            .publishTime(blog.getPublishTime())
+            .message(blog.getMessage())
             .build();
 
         return blogDto;
@@ -98,11 +82,7 @@ public class BlogServiceImplementation implements BlogService {
     private Blog mapToBlog(BlogDto blogDto) {
         Blog blog = Blog.builder()
             .title(blogDto.getTitle())
-            .author(blogDto.getAuthor())
-            .category(blogDto.getCategory())
-            .text(blogDto.getText())
-            .publishDate(blogDto.getPublishDate())
-            .publishTime(blogDto.getPublishTime())
+            .message(blogDto.getMessage())
             .build();
 
         return blog;

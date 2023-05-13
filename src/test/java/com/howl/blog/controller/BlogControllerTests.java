@@ -1,7 +1,5 @@
 package com.howl.blog.controller;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.Arrays;
 
 import org.hamcrest.CoreMatchers;
@@ -48,17 +46,10 @@ public class BlogControllerTests {
 
     @BeforeEach
     public void init() {
-        long millis = System.currentTimeMillis();
-        Date date = new Date(millis);
-        Time time = new Time(millis);
 
         blogDto = BlogDto.builder()
             .title("Rock Climbing Grip Strength")
-            .author("Ryan Wallace")
-            .category("Sports")
-            .text("Lorem ipsum dolor sit amet")
-            .publishDate(date)
-            .publishTime(time)
+            .message("Lorem ipsum dolor sit amet")
             .build();
     }
 
@@ -73,9 +64,7 @@ public class BlogControllerTests {
 
         response.andExpect(MockMvcResultMatchers.status().isCreated())
             .andExpect(MockMvcResultMatchers.jsonPath("$.title", CoreMatchers.is(blogDto.getTitle())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.author", CoreMatchers.is(blogDto.getAuthor())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.category", CoreMatchers.is(blogDto.getCategory())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.text", CoreMatchers.is(blogDto.getText())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.message", CoreMatchers.is(blogDto.getMessage())))
             .andDo(MockMvcResultHandlers.print());
     }
 
@@ -95,7 +84,7 @@ public class BlogControllerTests {
     }
 
     @Test
-    public void getPokemoneByIDTest() throws Exception {
+    public void getBlogByIdTest() throws Exception {
         long blogId = 1;
         when(blogService.getBlogById(blogId)).thenReturn(blogDto);
 
@@ -105,9 +94,7 @@ public class BlogControllerTests {
 
         response.andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.title", CoreMatchers.is(blogDto.getTitle())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.author", CoreMatchers.is(blogDto.getAuthor())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.category", CoreMatchers.is(blogDto.getCategory())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.text", CoreMatchers.is(blogDto.getText())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.message", CoreMatchers.is(blogDto.getMessage())))
             .andDo(MockMvcResultHandlers.print());
     }
 
@@ -118,9 +105,7 @@ public class BlogControllerTests {
 
         BlogDto updateBlogDto = BlogDto.builder()
             .title("updated title")
-            .author("updated author")
-            .category("updated category")
-            .text("updated text")
+            .message("updated message")
             .build();        
 
         when(blogService.updateBlogById(blogId, updateBlogDto)).thenReturn(updateBlogDto);
@@ -131,9 +116,7 @@ public class BlogControllerTests {
 
         response.andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.title", CoreMatchers.is(updateBlogDto.getTitle())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.author", CoreMatchers.is(updateBlogDto.getAuthor())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.category", CoreMatchers.is(updateBlogDto.getCategory())))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.text", CoreMatchers.is(updateBlogDto.getText())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.text", CoreMatchers.is(updateBlogDto.getMessage())))
             .andDo(MockMvcResultHandlers.print());
     }
 
