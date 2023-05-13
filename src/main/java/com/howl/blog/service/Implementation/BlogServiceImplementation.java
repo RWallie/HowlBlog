@@ -82,28 +82,28 @@ public class BlogServiceImplementation implements BlogService {
 
 
     private BlogDto mapToBlogDto(Blog blog) {
-        BlogDto blogDto = new BlogDto();
-
-        blogDto.setId(blog.getId());
-        blogDto.setTitle(blog.getTitle());   
-        blogDto.setAuthor(blog.getAuthor());
-        blogDto.setCategory(blog.getCategory());
-        blogDto.setText(blog.getText());
-        blogDto.setPublishDate(blog.getPublishDate());
-        blogDto.setPublishTime(blog.getPublishTime());
+        BlogDto blogDto = BlogDto.builder()
+            .id(blog.getId())
+            .title(blog.getTitle())
+            .author(blog.getAuthor())
+            .category(blog.getCategory())
+            .text(blog.getText())
+            .publishDate(blog.getPublishDate())
+            .publishTime(blog.getPublishTime())
+            .build();
 
         return blogDto;
     }
 
     private Blog mapToBlog(BlogDto blogDto) {
-        Blog blog = new Blog();
-
-        blog.setTitle(blogDto.getTitle());   
-        blog.setAuthor(blogDto.getAuthor());
-        blog.setCategory(blogDto.getCategory());
-        blog.setText(blogDto.getText());
-        blog.setPublishDate(blogDto.getPublishDate());
-        blog.setPublishTime(blogDto.getPublishTime());
+        Blog blog = Blog.builder()
+            .title(blogDto.getTitle())
+            .author(blogDto.getAuthor())
+            .category(blogDto.getCategory())
+            .text(blogDto.getText())
+            .publishDate(blogDto.getPublishDate())
+            .publishTime(blogDto.getPublishTime())
+            .build();
 
         return blog;
     }
