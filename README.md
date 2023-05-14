@@ -28,14 +28,26 @@ http://localhost:8080/h2
 And Execute SQL queries 
 as per `spring.h2.console.enabled=true`
 
+### Login Credentials for H2 Console in Web Browser:
+---
+
+- Driver Class: org.h2.Driver
+- JDBC URL: jdbc:h2:mem:testdb
+- User Name: sa
+- Password: 
+
 Database is H2. Reason being it is in memory, meaning upon application restart the database will start fresh.
 
 ## Request Endpoints
 ---
 - `GET` - `/blogs`       - gets all blogs from the `BLOGS` table
+
 - `GET` - `/blogs/{id}`  - gets a blog by `id` from `BLOGS` table 
-- `POST` - `/blogs`      - adds a blog to the `BLOGS` table
-- `PUT` - `/blogs/{id}`  - updates a blog by `id` in the `BLOGS` table  
+
+- `POST` - `/blogs`      - adds a blog to the `BLOGS` table - send data in Body as raw JSON
+
+- `PUT` - `/blogs/{id}`  - updates a blog by `id` in the `BLOGS` table  - updated information in Body as raw JSON. Will only update non null fields.
+
 - `DELETE` - `/blogs/{id}`       - deletes a blog by `id` from the `BLOGS` table
 
 All requests that look for blogs by **id** throw `NotFound` exceptions if `id` is invalid
