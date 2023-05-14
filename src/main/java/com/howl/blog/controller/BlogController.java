@@ -15,6 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.howl.blog.dto.BlogDto;
 import com.howl.blog.service.BlogService;
 
+/*
+ * Rest Controler that accepts and respondes to HTTP requests at the /blogs endpoint
+ * The blogService interface is injected into the controller.
+ * Different CRUD mappings route the requests through the blogService interface
+ * to the blogServiceImplementation where middleware handles data to the H2 
+ * database and back, sending a ResponseEntity with the response data and 
+ * appropriate HTTPStatus.
+ */
 
 @RestController
 @RequestMapping("/blogs")

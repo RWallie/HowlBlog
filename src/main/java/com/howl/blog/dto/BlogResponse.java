@@ -7,6 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/*
+ * Encapsulates a collection of BlogDto objects
+ */
+
 @Data
 @Builder
 @NoArgsConstructor

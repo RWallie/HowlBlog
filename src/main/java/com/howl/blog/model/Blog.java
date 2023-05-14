@@ -12,6 +12,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/*
+ * The Blog class is a persistent entity that will be mapped to a 
+ * Database table named: "BLOGS"
+ * (H2 Database as per src/main/resource/application.properties)
+ * 
+ */
+
 @Entity
 @Table(name="BLOGS")
 @Setter

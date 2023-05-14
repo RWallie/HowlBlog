@@ -8,6 +8,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+/*
+ * Global exception handling a blog id that is not found.
+ * StatusCode - NOT_FOUND - 404
+ * ControllerAdvice annotation allows it to handle exceptions across multiple controllers
+ * A new ErrorObject is created to encapsulate error details
+ * 
+ */
+
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
     

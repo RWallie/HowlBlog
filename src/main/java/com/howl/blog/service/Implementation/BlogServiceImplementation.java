@@ -11,6 +11,19 @@ import com.howl.blog.model.Blog;
 import com.howl.blog.repository.BlogRepository;
 import com.howl.blog.service.BlogService;
 
+/*
+ * Implementation of BlogService.
+ * Provides logic between the BlogController and BlogRepository
+ * Performs operations for each controller mapping:
+ * addBlog
+ * getBlogById
+ * getAllBlogs
+ * updateBlogById
+ * deleteBlogById
+ * Utilizes BlogRepository to database operations and converts response
+ * data to Data Transfer Objects before returning back
+ */
+
 @Service
 public class BlogServiceImplementation implements BlogService {
 
