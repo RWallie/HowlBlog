@@ -1,14 +1,19 @@
 # Howl Take Home
 
 ## Summary
+
 ---
+
 Java server implementing CRUD operations for a blog post that contains a **title** and **message**. Utilizes Spring Boot, JPA, Hibernate, and H2 in memory database to transfer and store data between requests and responses. Provides Unit testing for the Service and Repository layers as well as Integration testing for the Controller.
 
 ## How To Run Server
+
 ---
-Running on Java version 17 
+
+Running on Java version 17
 
 In root directory run:
+
 ```
 ./mvnw spring-boot:run
 ```
@@ -25,26 +30,30 @@ You can access database at:
 http://localhost:8080/h2
 ```
 
-And Execute SQL queries 
+And Execute SQL queries
 as per `spring.h2.console.enabled=true`
 
 ### Login Credentials for H2 Console in Web Browser:
+
 ---
 
 - Driver Class: org.h2.Driver
 - JDBC URL: jdbc:h2:mem:testdb
 - User Name: sa
-- Password: 
+- Password:
 
 Database is H2. Reason being it is in memory, meaning upon application restart the database will start fresh.
 
 ## Request Endpoints
+
 ---
-- `GET` - `/blogs`       - gets all blogs from the `BLOGS` table
 
-- `GET` - `/blogs/{id}`  - gets a blog by `id` from `BLOGS` table 
+- `GET` - `/blogs` - gets all blogs from the `BLOGS` table
 
-- `POST` - `/blogs`      - adds a blog to the `BLOGS` table - send data in Body as raw JSON
+- `GET` - `/blogs/{id}` - gets a blog by `id` from `BLOGS` table
+
+- `POST` - `/blogs` - adds a blog to the `BLOGS` table - send data in Body as raw JSON
+
 ```
 {
   "title": "example title",
@@ -52,7 +61,8 @@ Database is H2. Reason being it is in memory, meaning upon application restart t
 }
 ```
 
-- `PUT` - `/blogs/{id}`  - updates a blog by `id` in the `BLOGS` table  - updated information in Body as raw JSON. Will only update non null fields.
+- `PUT` - `/blogs/{id}` - updates a blog by `id` in the `BLOGS` table - updated information in Body as raw JSON. Will only update non null fields.
+
 ```
 {
   "title": "updated title",
@@ -60,13 +70,16 @@ Database is H2. Reason being it is in memory, meaning upon application restart t
 }
 ```
 
-- `DELETE` - `/blogs/{id}`       - deletes a blog by `id` from the `BLOGS` table
+- `DELETE` - `/blogs/{id}` - deletes a blog by `id` from the `BLOGS` table
 
-All requests that look for blogs by **id** throw `NotFound` exceptions if `id` is invalid
+All requests that look for blogs by `id` throw `404 NotFound` exceptions if `id` is invalid
+
+All requests that send data in the request body throw `400 BadRequest` exception if property values are empty strings or null where necessary. Don't have to check if parameter is instance of String because Spring leverages data binding where parameters annotated with `@RequestParam`, `@RequestBody`, `@PathVariable`, get type coerced to the correct data type.
 
 Java natively handles internal server errors and will respond with `500` status.
 
 ## Tests
+
 ---
 
 Tests are found in `src/test/java/com/howl/blog` directory

@@ -16,12 +16,12 @@ import com.howl.blog.service.BlogService;
  * Implementation of BlogService.
  * Provides logic between the BlogController and BlogRepository
  * Performs operations for each controller mapping:
- * addBlog
- * getBlogById
- * getAllBlogs
- * updateBlogById
- * deleteBlogById
- * Utilizes BlogRepository to database operations and converts response
+ * addBlog        - POST
+ * getBlogById    - GET
+ * getAllBlogs    - GET
+ * updateBlogById - PUT
+ * deleteBlogById - DELETE
+ * Utilizes BlogRepository for database operations and converts response
  * data to Data Transfer Objects before returning back
  * Throws exceptions for BadRequests - Invalid data types for 
  * title and message properties on blogDto: 400 Status Code

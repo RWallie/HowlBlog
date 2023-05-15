@@ -8,6 +8,7 @@ import lombok.Data;
  * An error object to contain information about an
  * exception that occurs in our controllers.
  * Error Object set in: ./GlobalExceptionHandler
+ * and used to return information from Exceptions
  */
 
 @Data
