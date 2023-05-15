@@ -30,4 +30,15 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.NOT_FOUND);
     } 
+
+    @ExceptionHandler(BlogBadRequestException.class)
+    public ResponseEntity<ErrorObject> handleBlogBadRequestException(BlogBadRequestException ex, WebRequest request) {
+        ErrorObject errorObject = new ErrorObject();
+        
+        errorObject.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        errorObject.setMessage(ex.getMessage());
+        errorObject.setTimestamp(new Date());
+
+        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.BAD_REQUEST);
+    }
 }

@@ -1,8 +1,9 @@
 package com.howl.blog.exceptions;
 
 /*
- * BlogNotFoundException extends RuntimeException gives the ability to throw
- * the error when it occurs within the BlogServiceImplementation class
+ * BlogNotFoundException extends RuntimeException gives the ability
+ * to throw the error when a 404 not found occurs within the 
+ * BlogServiceImplementation class
  */
 
 public class BlogNotFoundException extends RuntimeException{
