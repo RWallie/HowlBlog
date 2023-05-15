@@ -41,8 +41,6 @@ public class BlogServiceImplementation implements BlogService {
 
     @Override
     public BlogDto addBlog(BlogDto blogDto) {
-        System.out.println(blogDto.getTitle().getClass());
-        System.out.println(blogDto.getMessage().getClass());
 
         // verifys the title and message types are not null and are not
         // empty strings before inserting into Blog entity
