@@ -2,6 +2,7 @@ package com.howl.blog.service;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.howl.blog.dto.BlogDto;
+import com.howl.blog.exceptions.BlogBadRequestException;
 import com.howl.blog.exceptions.BlogNotFoundException;
 import com.howl.blog.model.Blog;
 import com.howl.blog.repository.BlogRepository;
@@ -65,6 +67,30 @@ public class BlogServiceTests {
     BlogDto savedBlog = blogService.addBlog(blogDto);
 
     Assertions.assertThat(savedBlog).isNotNull();
+  }
+
+  @Test
+  public void addBlogService_EmptyTitle_BlogBadRequestException_Test() {
+    BlogDto blogDto = BlogDto.builder()
+        .title("")
+        .message("test message")
+        .build();
+
+      assertThrows(BlogBadRequestException.class, () -> {
+        blogService.addBlog(blogDto);
+    });
+  }
+
+  @Test
+  public void addBlogService_EmptyMessage_BlogBadRequestException_Test() {
+    BlogDto blogDto = BlogDto.builder()
+        .title("test title")
+        .message("")
+        .build();
+
+      assertThrows(BlogBadRequestException.class, () -> {
+        blogService.addBlog(blogDto);
+    });
   }
 
   @Test
@@ -159,20 +185,47 @@ public class BlogServiceTests {
     }
 
   @Test
-  public void updateBlogById_BlogNotFoundException_Test() {
-    // Mock the blogRepository.findById() method to return an empty optional
-    when(blogRepository.findById(1L)).thenReturn(Optional.empty());
+  public void updateBlogByIdService_EmptyTitle_BlogBadRequestException_Test() {
 
-    // Create a BlogDto object for the update
-    BlogDto blogDto = BlogDto.builder()
+    Blog blog = Blog.builder()
       .id(1L)
-      .title("Hiking Trails")
-      .message("Consectetur adipiscing elit")
+      .title("Rock Climbing Grip Strength")
+      .message("Lorem ipsum dolor sit amet")
       .build();
 
-    // Call the updateBlogById method and expect a BlogNotFoundException
-    Assertions.assertThatThrownBy(() -> blogService.updateBlogById(1L, blogDto))
-      .isInstanceOf(BlogNotFoundException.class);
+    when(blogRepository.findById(1L)).thenReturn(Optional.ofNullable(blog));
+
+    Long blogId = 1L;
+    BlogDto blogDto = BlogDto.builder()
+            .title("")
+            .message("Updated message")
+            .build();
+
+    assertThrows(BlogBadRequestException.class, () -> {
+        blogService.updateBlogById(blogId, blogDto);
+    });
+  }
+
+  @Test
+  public void updateBlogByIdService_EmptyMessage_BlogBadRequestException_Test() {
+
+    Blog blog = Blog.builder()
+      .id(1L)
+      .title("Rock Climbing Grip Strength")
+      .message("Lorem ipsum dolor sit amet")
+      .build();
+
+    when(blogRepository.findById(1L)).thenReturn(Optional.ofNullable(blog));
+
+    Long blogId = 1L;
+    BlogDto blogDto = BlogDto.builder()
+            .title("Updated title")
+            .message("")
+            .build();
+
+    assertThrows(BlogBadRequestException.class, () -> {
+        blogService.updateBlogById(blogId, blogDto);
+    });
   }
 
   @Test

@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.howl.blog.dto.BlogDto;
 import com.howl.blog.dto.BlogResponse;
+import com.howl.blog.exceptions.BlogBadRequestException;
 import com.howl.blog.exceptions.BlogNotFoundException;
 import com.howl.blog.service.BlogService;
 
@@ -88,6 +89,23 @@ public class BlogControllerTests {
     }
 
     @Test
+    public void addBlogPost_BlogBadRequestException_Test() throws Exception {
+        BlogDto blogDto = BlogDto.builder()
+            .title("")
+            .message("Lorem ipsum dolor sit amet")
+            .build();
+
+        when(blogService.addBlog(blogDto)).thenThrow(BlogBadRequestException.class);
+
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/blogs")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(blogDto)));
+
+        response.andExpect(MockMvcResultMatchers.status().isBadRequest())
+            .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
     public void getAllBlogsControllerTest() throws Exception {    
         BlogResponse responseDto = BlogResponse.builder()
             .blogs(Arrays.asList(blogDto))
@@ -118,7 +136,7 @@ public class BlogControllerTests {
     }
 
     @Test
-    public void getBlogByIdControllerTest_BlogNotFoundException() throws Exception {
+    public void getBlogByIdController_BlogNotFoundException_Test() throws Exception {
         long blogId = 1;
 
         when(blogService.getBlogById(blogId)).thenThrow(BlogNotFoundException.class);
@@ -154,7 +172,26 @@ public class BlogControllerTests {
     }
 
     @Test
-    public void updateBlogPostByIdControllerTest_BlogNotFoundException() throws Exception {
+    public void updateBlogPostByIdController_BlogBadRequestException_Test() throws Exception {
+        long blogId = 1;
+
+        BlogDto updateBlogDto = BlogDto.builder()
+                .title("")
+                .message("updated message")
+                .build();
+
+        when(blogService.updateBlogById(blogId, updateBlogDto)).thenThrow(BlogBadRequestException.class);
+
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.put("/blogs/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updateBlogDto)));
+
+        response.andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void updateBlogPostByIdController_BlogNotFoundException_Test() throws Exception {
         long blogId = 1;
 
         BlogDto updateBlogDto = BlogDto.builder()
@@ -186,7 +223,7 @@ public class BlogControllerTests {
     }
 
     @Test
-    public void deleteBlogByIdControllerTest_BlogNotFoundException() throws Exception {
+    public void deleteBlogByIdController_BlogNotFoundException_Test() throws Exception {
         long blogId = 1;
 
         doThrow(BlogNotFoundException.class).when(blogService).deleteBlogById(blogId);

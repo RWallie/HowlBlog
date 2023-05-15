@@ -11,6 +11,8 @@ import org.springframework.web.context.request.WebRequest;
 /*
  * Global exception handling a blog id that is not found.
  * StatusCode - NOT_FOUND - 404
+ * Also handles POST and PUT requests to the blog
+ * with invalid data - BAD_REQUEST - 400
  * ControllerAdvice annotation allows it to handle exceptions across multiple controllers
  * A new ErrorObject is created to encapsulate error details
  * 
