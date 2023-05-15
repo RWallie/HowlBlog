@@ -45,8 +45,20 @@ Database is H2. Reason being it is in memory, meaning upon application restart t
 - `GET` - `/blogs/{id}`  - gets a blog by `id` from `BLOGS` table 
 
 - `POST` - `/blogs`      - adds a blog to the `BLOGS` table - send data in Body as raw JSON
+```
+{
+  "title": "example title",
+  "message" "example message"
+}
+```
 
 - `PUT` - `/blogs/{id}`  - updates a blog by `id` in the `BLOGS` table  - updated information in Body as raw JSON. Will only update non null fields.
+```
+{
+  "title": "updated title",
+  "message": "updated message
+}
+```
 
 - `DELETE` - `/blogs/{id}`       - deletes a blog by `id` from the `BLOGS` table
 
@@ -61,6 +73,6 @@ Tests are found in `src/test/java/com/howl/blog` directory
 
 - **Repository Tests**: Unit tests the `BlogRepository` for basic CRUD functionality from CrudRepository which JpaRepository extends. Validating that the Hibernate ORM works properly with the `BLOGS` entity.
 
-- **Service Tests**: Unit tests the BlogServiceImplementation class methods, verifying they return the correct data. Also tests that `BlogNotFound` exception is thrown when invalid `id`s are used.
+- **Service Tests**: Unit tests the BlogServiceImplementation class methods, verifying they return the correct data. Tests that `BlogNotFound` exception is thrown when invalid `id`s are used. Tests that `BadRequest` exception is thrown when invalid `title` or `message` are sent when adding or updating a blog.
 
-- **Controlelr Tests**: Integration tests for the `BlogController`. Utilizes MockMvc and Mockito to mock requests to our controller endpoints without having to start up the server. Is more cost/time efficient. Validates the appropriate data will be sent back as a response. Also checks for `404` `NotFound` status when invalid `id`s are sent to the controller.
+- **Controller Tests**: Integration tests for the `BlogController`. Utilizes MockMvc and Mockito to mock requests to our controller endpoints without having to start up the server. Is more cost/time efficient. Validates the appropriate data will be sent back as a response. Checks for `404` `NotFound` status when invalid `id`s are sent to the controller. Checks for `400 BadRequest` when invalid `title` or `message` are sent when adding or updating a blog.
